@@ -21,7 +21,7 @@ public class SubstractCommand implements ComputerCommand {
                 throw new InvalidInputException("Operation cancelled by user.");
             }
         }
-        
+
         double result = values.get(0);
 
         for(double n: values){

@@ -1,18 +1,22 @@
 package basicCalculatorApp;
 
 import basicCalculator.ComputerCommand;
-import calculator.AddCommand;
-import calculator.DivisonCommand;
-import calculator.MultiplyCommand;
-import calculator.SubstractCommand;
+import calculator.*;
 
 import java.util.*;
 
 public class BasicCalculatorApp {
 
+    private static final CommandHistory commandHistory = new CommandHistory();
+
     public static void main(String[] args) {
 
-        System.out.println("Running");
+
+
+        if (args.length == 1 && args[0].equalsIgnoreCase("history")) {
+            commandHistory.printHistory();
+            return;
+        }
 
         if (args.length < 3) {
             System.out.println("You have to use it as shown: [operation] [nums1] [nums2]....");
@@ -28,6 +32,7 @@ public class BasicCalculatorApp {
 
         // Get the operation (first argument)
         String input = args[0];
+
 
         // List to hold the numbers
         List<Double> values = new ArrayList<>();
@@ -52,8 +57,14 @@ public class BasicCalculatorApp {
             double result = command.execute(values);
             System.out.println("Result: " + result);
 
+
+            String commandLine = String.join(" ", args);
+            commandHistory.add(commandLine);
+            commandHistory.saveHistoryToFile();
+
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
+
     }
 }
