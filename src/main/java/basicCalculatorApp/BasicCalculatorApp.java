@@ -1,37 +1,37 @@
 package basicCalculatorApp;
 
 import basicCalculator.ComputerCommand;
-import calculator.*;
+import service.*;
 
 import java.util.*;
 
 public class BasicCalculatorApp {
 
-    private static final CommandHistory commandHistory = new CommandHistory();
-
     public static void main(String[] args) {
 
+        System.out.println("Running");
 
+        String input = args[0];
 
-        if (args.length == 1 && args[0].equalsIgnoreCase("history")) {
-            commandHistory.printHistory();
+        CommandHistoryService commandHistoryService = new CommandHistoryService();
+
+        if(input.equalsIgnoreCase("history")){
+            commandHistoryService.printsHistory();
             return;
         }
 
-        if (args.length < 3) {
+        if (args.length < 3 && !input.equalsIgnoreCase("history")) {
             System.out.println("You have to use it as shown: [operation] [nums1] [nums2]....");
             return;
         }
 
+
         // Create the map of operations
         Map<String, ComputerCommand> commands = new HashMap<>();
-        commands.put("add", new AddCommand());
-        commands.put("substract", new SubstractCommand());
-        commands.put("multiply", new MultiplyCommand());
-        commands.put("divison", new DivisonCommand());
-
-        // Get the operation (first argument)
-        String input = args[0];
+        commands.put("add", new AddCommandService());
+        commands.put("substract", new SubstractCommandService());
+        commands.put("multiply", new MultiplyCommandService());
+        commands.put("divison", new DivisonCommandService());
 
 
         // List to hold the numbers
@@ -55,16 +55,11 @@ public class BasicCalculatorApp {
 
             // Execute the operation and print the result
             double result = command.execute(values);
+            commandHistoryService.addHistory(input, values, result);
             System.out.println("Result: " + result);
-
-
-            String commandLine = String.join(" ", args);
-            commandHistory.add(commandLine);
-            commandHistory.saveHistoryToFile();
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
     }
 }

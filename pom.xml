@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>Basic Calculator</name>
-    <description>A simple Java-based calculator using Maven.</description>
+    <description>A simple Java-based service using Maven.</description>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

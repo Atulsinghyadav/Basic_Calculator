@@ -1,11 +1,11 @@
-package calculator;
+package service;
 
 import basicCalculator.ComputerCommand;
 import exceptionHandling.InvalidInputException;
 
 import java.util.List;
 
-public class AddCommand implements ComputerCommand {
+public class AddCommandService implements ComputerCommand {
 
 
     public double execute(List<Double> values) throws InvalidInputException {

@@ -1,11 +1,11 @@
-package calculator;
+package service;
 
 import basicCalculator.ComputerCommand;
 import exceptionHandling.InvalidInputException;
 
 import java.util.List;
 
-public class DivisonCommand implements ComputerCommand {
+public class DivisonCommandService implements ComputerCommand {
 
     public double execute(List<Double> values) throws InvalidInputException {
         if(values.size()<2) {

@@ -1,4 +1,4 @@
-package calculator;
+package service;
 
 import basicCalculator.ComputerCommand;
 import exceptionHandling.InvalidInputException;
@@ -6,7 +6,7 @@ import exceptionHandling.InvalidInputException;
 import java.util.List;
 import java.util.Scanner;
 
-public class SubstractCommand implements ComputerCommand {
+public class SubstractCommandService implements ComputerCommand {
 
     public double execute(List<Double> values) throws InvalidInputException {
         if(values.size()<2){
