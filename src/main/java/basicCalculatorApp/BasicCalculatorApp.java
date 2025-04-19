@@ -21,6 +21,7 @@ public class BasicCalculatorApp {
         commands.put("substract", new SubstractCommandService());
         commands.put("multiply", new MultiplyCommandService());
         commands.put("divison", new DivisonCommandService());
+        commands.put("history", new CommandHistoryService());
 
 
 
@@ -32,9 +33,12 @@ public class BasicCalculatorApp {
 
             if (!commands.containsKey(input.toLowerCase())) {
                 System.out.println("Please enter a valid operation:");
+                break;
             }
 
-            System.out.println("Enter the numbers. Press enter without typing anything to stop.");
+            if(!input.equalsIgnoreCase("history")) {
+                System.out.println("Enter the numbers. Press enter without typing anything to stop.");
+            }
 
             List<Double> values = new ArrayList<>();
             // List to hold the numbers
@@ -68,12 +72,13 @@ public class BasicCalculatorApp {
                 if(choice.equalsIgnoreCase("no")){
                     break;
                 }
-                System.out.println("Do you want to see the history for last 5 operations. It will stop this program.");
-                String historyChoice = sc.nextLine();
-                if (historyChoice.equalsIgnoreCase("Yes")) {
-                    commandHistoryService.printsHistory();
-                    break;
-                }
+          //    System.out.println("Do you want to see the history for last 5 operations. It will stop this program.");
+
+//                String historyChoice = sc.nextLine();
+//                if (historyChoice.equalsIgnoreCase("Yes")) {
+//                    commandHistoryService.printsHistory();
+//                    break;
+//                }
 
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
