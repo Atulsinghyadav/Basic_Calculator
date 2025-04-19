@@ -5,10 +5,10 @@ import exceptionHandling.InvalidInputException;
 
 import java.util.List;
 
-public class AddCommandService implements ComputerCommand {
+public class AddCommandService implements ComputerCommand<Double> {
 
 
-    public double execute(List<Double> values) throws InvalidInputException {
+    public Double execute(List<Double> values) throws InvalidInputException {
         if (values.size() < 2) {
             throw new InvalidInputException("Please enter atleast two numbers to perform addition.");
         }

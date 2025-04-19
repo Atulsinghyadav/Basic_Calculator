@@ -4,8 +4,7 @@ import exceptionHandling.InvalidInputException;
 import java.util.List;
 
 
-public interface ComputerCommand {
-    double execute(List<Double> values) throws InvalidInputException;
-
+public interface ComputerCommand<T> {
+    T execute(List<Double> values) throws InvalidInputException;
 
 }

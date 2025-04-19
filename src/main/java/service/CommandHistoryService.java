@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-    public class CommandHistoryService implements ComputerCommand {
+    public class CommandHistoryService implements ComputerCommand<Void> {
     private String input;
     private List<Double> values;
     private double result;
@@ -78,12 +78,12 @@ import java.util.Queue;
     }
 
     @Override
-    public double execute(List<Double> values) throws InvalidInputException {
+    public Void execute(List<Double> values) throws InvalidInputException {
 
         for(CommandHistoryService h: history){
             System.out.println("operations: " + h.input + ", values: " + h.values + ", result: " + h.result);
         }
-        return -1;
+        return null;
     }
 
 }

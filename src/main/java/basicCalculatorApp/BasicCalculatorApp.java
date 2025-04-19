@@ -16,7 +16,7 @@ public class BasicCalculatorApp {
         Scanner sc = new Scanner(System.in);
 
         // Create the map of operations
-        Map<String, ComputerCommand> commands = new HashMap<>();
+        Map<String, ComputerCommand<?>> commands = new HashMap<>();
         commands.put("add", new AddCommandService());
         commands.put("substract", new SubstractCommandService());
         commands.put("multiply", new MultiplyCommandService());
@@ -57,28 +57,27 @@ public class BasicCalculatorApp {
 
             try {
                 // Check if the operation is valid
-                ComputerCommand command = commands.get(input);
+                ComputerCommand<?> command = commands.get(input);
                 if (command == null) {
                     System.out.println("Please enter a valid operation.");
                     return;
+                } else if (input.equalsIgnoreCase("history")){
+                    ((ComputerCommand<Void>) commands.get("history")).execute(values);
+                    continue;
+                }
+                else {
+                    ComputerCommand<Double> doubleCommand = (ComputerCommand<Double>) commands.get(input);
+                    Double result = doubleCommand.execute(values);
+                    commandHistoryService.addHistory(input, values, result);
+                    System.out.println("Result: " + result);
                 }
 
-                // Execute the operation and print the result
-                double result = command.execute(values);
-                commandHistoryService.addHistory(input, values, result);
-                System.out.println("Result: " + result);
                 System.out.println("Do you wish to perform more operations.");
                 String choice = sc.nextLine().trim();
                 if(choice.equalsIgnoreCase("no")){
                     break;
                 }
-          //    System.out.println("Do you want to see the history for last 5 operations. It will stop this program.");
 
-//                String historyChoice = sc.nextLine();
-//                if (historyChoice.equalsIgnoreCase("Yes")) {
-//                    commandHistoryService.printsHistory();
-//                    break;
-//                }
 
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());

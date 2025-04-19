@@ -5,9 +5,9 @@ import exceptionHandling.InvalidInputException;
 
 import java.util.List;
 
-public class MultiplyCommandService implements ComputerCommand {
+public class MultiplyCommandService implements ComputerCommand<Double> {
 
-    public double execute(List<Double> values) throws InvalidInputException {
+    public Double execute(List<Double> values) throws InvalidInputException {
         if(values.size()<2){
             throw new InvalidInputException("Please enter atleast two numbers to perform multiply");
         }
