@@ -77,8 +77,6 @@ public class BasicCalculatorApp {
                 if(choice.equalsIgnoreCase("no")){
                     break;
                 }
-
-
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
