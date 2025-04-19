@@ -1,4 +1,4 @@
-Hi, This is a basic calculator project which performs addition and substraction on N numbers.
+Hi, This is a basic service project which performs addition and substraction on N numbers.
 
 #HOW TO RUN THIS PROJECT ON YOUR SYSTEM WITHOUT ANY IDE ---->
 1. First of all download and install java in your system and if it is already installed on your system you can verify it using java --version.

@@ -1,70 +1,85 @@
 package basicCalculatorApp;
 
 import basicCalculator.ComputerCommand;
-import calculator.*;
+import service.*;
 
 import java.util.*;
 
 public class BasicCalculatorApp {
 
-    private static final CommandHistory commandHistory = new CommandHistory();
-
     public static void main(String[] args) {
 
+        System.out.println("Welcome to the Calculator.Here you can perform actions like 'addition', 'substraction'" +
+                "'multiply', 'divison' and also see the history for last 5 operations.");
 
-
-        if (args.length == 1 && args[0].equalsIgnoreCase("history")) {
-            commandHistory.printHistory();
-            return;
-        }
-
-        if (args.length < 3) {
-            System.out.println("You have to use it as shown: [operation] [nums1] [nums2]....");
-            return;
-        }
+        CommandHistoryService commandHistoryService = new CommandHistoryService();
+        Scanner sc = new Scanner(System.in);
 
         // Create the map of operations
-        Map<String, ComputerCommand> commands = new HashMap<>();
-        commands.put("add", new AddCommand());
-        commands.put("substract", new SubstractCommand());
-        commands.put("multiply", new MultiplyCommand());
-        commands.put("divison", new DivisonCommand());
-
-        // Get the operation (first argument)
-        String input = args[0];
+        Map<String, ComputerCommand<?>> commands = new HashMap<>();
+        commands.put("add", new AddCommandService());
+        commands.put("substract", new SubstractCommandService());
+        commands.put("multiply", new MultiplyCommandService());
+        commands.put("divison", new DivisonCommandService());
+        commands.put("history", new CommandHistoryService());
 
 
-        // List to hold the numbers
-        List<Double> values = new ArrayList<>();
-        for (int i = 1; i < args.length; i++) {
+
+        while (true) {
+
+            System.out.println("Enter the operation you want to perform:");
+
+            String input = sc.nextLine().trim();
+
+            if (!commands.containsKey(input.toLowerCase())) {
+                System.out.println("Please enter a valid operation:");
+                break;
+            }
+
+            if(!input.equalsIgnoreCase("history")) {
+                System.out.println("Enter the numbers. Press enter without typing anything to stop.");
+            }
+
+            List<Double> values = new ArrayList<>();
+            // List to hold the numbers
+            while (true) {
+                String line = sc.nextLine().trim();
+                if (line.isEmpty()) {
+                    break;
+                }
+                try {
+                    values.add(Double.parseDouble(line));
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid number format: ");
+                    return;
+                }
+            }
+
             try {
-                values.add(Double.parseDouble(args[i]));
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid number format: " + args[i]);
-                return;
+                // Check if the operation is valid
+                ComputerCommand<?> command = commands.get(input);
+                if (command == null) {
+                    System.out.println("Please enter a valid operation.");
+                    return;
+                } else if (input.equalsIgnoreCase("history")){
+                    ((ComputerCommand<Void>) commands.get("history")).execute(values);
+                    continue;
+                }
+                else {
+                    ComputerCommand<Double> doubleCommand = (ComputerCommand<Double>) commands.get(input);
+                    Double result = doubleCommand.execute(values);
+                    commandHistoryService.addHistory(input, values, result);
+                    System.out.println("Result: " + result);
+                }
+
+                System.out.println("Do you wish to perform more operations.");
+                String choice = sc.nextLine().trim();
+                if(choice.equalsIgnoreCase("no")){
+                    break;
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
-
-        try {
-            // Check if the operation is valid
-            ComputerCommand command = commands.get(input);
-            if (command == null) {
-                System.out.println("Please enter a valid operation.");
-                return;
-            }
-
-            // Execute the operation and print the result
-            double result = command.execute(values);
-            System.out.println("Result: " + result);
-
-
-            String commandLine = String.join(" ", args);
-            commandHistory.add(commandLine);
-            commandHistory.saveHistoryToFile();
-
-        } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-
     }
 }
