@@ -24,8 +24,8 @@ public class SubstractCommandService implements ComputerCommand<Double> {
 
         double result = values.get(0);
 
-        for(double n: values){
-            result -= n;
+        for(int j=1 ; j<values.size(); j++){
+            result -= values.get(j);
         }
         return result;
 
