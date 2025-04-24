@@ -24,10 +24,10 @@ class DivisonCommandServiceTest {
     }
 
     @Test
-    void testNullPointerException(){
+    void testArithmeticException(){
         List<Double> input1 = Arrays.asList(10.0, 0.0);
 
-        Assertions.assertThrows(NullPointerException.class, () -> {
+        Assertions.assertThrows(ArithmeticException.class, () -> {
             divisonCommandService.execute(input1);
         });
     }
