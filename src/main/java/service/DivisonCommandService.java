@@ -15,7 +15,7 @@ public class DivisonCommandService implements ComputerCommand<Double> {
 
         for(int i=1; i<values.size(); i++) {
             if (values.get(i) == 0) {
-                throw new NullPointerException("You can not use a zero value in divison");
+                throw new ArithmeticException("You can not use a zero value in divison");
             } else {
                 result /= values.get(i);
             }
